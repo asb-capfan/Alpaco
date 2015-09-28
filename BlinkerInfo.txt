@@ -1,0 +1,96 @@
+
+Blinker Data Usage
+
+Key  #1: I found the following file - "file.descriptions.txt" which 
+explained the Blinker file types.  This file is included below.  It  
+explains that some files are used for statistical uses, some are used  
+only for open class words, some are the actual verses that were  
+connected, and finally some have the connections in them.
+
+Key #2:The file listed in Key #1 also contained an equation that helped 
+me  map the connection files to their respective verses. The equation is 
+based on  the connection file names, which are named as follows: 
+samp##.SentPair# (where the ## is a number 1-25, and the # is a number 
+0-9).  The equation given to  calculate the verse that is mapped to a 
+connection file is as follows:  
+
+verse number = ((## - 1) * 10) + (# + 1)   ---## and # are defined above--- 
+
+Key #3: Each verse file is in the form: EN.sample.## or FR.sample.## 
+(where ## is a number 1-25).  Each file has 10 verses in them, which are 
+all  separated by a \n character.  This, paired with the equation given 
+above  helped me map the connection file with the proper verse.
+
+Key #4: In the connection files there are 2 columns of numbers.  These  
+numbers are indexes for words in the verses, opposite columns are 
+translations of each other.  If a word has a null connection, then its 
+partner in the  opposite column is a zero.  This information helped me use 
+the functions I  already had implemented, to make the code simpler, and to 
+transform the  Blinker data into my format. There are some small 
+differences, but they are  unavoidable, and insignificant. 
+
+Key #5: The only files needed by my connection tool are the connection 
+files and the verse files.  They end in .SentPair# and .sample.## 
+respectively.  The other files are used for statistical purposes, and are 
+not necessary for  this research project, with the exception of one type.  
+If a file ends in  .open, it lists the connections ignoring the 
+closed-class words.  This may be  beneficial because there will be many 
+repeats of closed class words, and  multiple connections may not be 
+necessary. 
+	
+Key #6: The way I chose to implement my connection tool does not match how  
+the Blinker was used.  Because of this, I needed to change the Blinker 
+data to  my format.  This can be done by opening a Blinker connection file  
+(samp##.SentPair#), and my program will find the verses needed for this  
+connection.  Then connections can be saved in my format by giving names 
+for  the English verse, French verse, and for the connection file (my 
+format).   This is necessary because the connections were made one verse 
+at a time, and  the verse files given have 10 verses in them.  My 
+application does not work  with just one verse from a longer file, so I 
+must save the single verse in  its own file.   
+
+--------------------------------------------
+
+file_descriptions.txt
+
+This file is from the blinker data distribution.  More information about  
+this data, and the data itself can be found at: 
+
+http://www.cs.nyu.edu/cs/projects/proteus/blinker/
+
+Files beginning with	are
+--------------------	---
+
+EN			the English text of the gold standard
+FR			the French text of the gold standard
+frq			words in the focus set, by frequency
+A			directories for the data of each annotator
+
+
+Within the A?/ directories, files are named as follows:
+
+part[12] refers to parts 1 and 2 of the gold standard, where part 1 is
+verse pairs 1 to 100 and part 2 is verse pairs 101 to 250
+
+.jnorm .lnorm and .rnorm refer to the 3 kinds of link normalizations:
+joint, left and right.  "left" generally refers to the English side
+and "right" to the French side.  .lnorm means that the links are
+normalized so that the weights of the links attached to any word on
+the English side sum to less than or equal to 1.  Likewise for .rnorm
+and French.  .jnorm means the weights of links on both sides were
+normalized to sum to less than or equal to 1.
+
+.open means links involving a closed-class word on either side were
+ignored.
+
+.complete means the complete ordered set of links for either part1 or
+part2 of the gold standard.  The 2nd column in these files specifies
+the verse pair number; the 1st column specifies link weight.
+
+.sub files are subsets of the .complete files, generated for the
+purpose of computing inter-annotator agreements rates and their
+standard deviations (see the paper).
+
+The files samp*.SentPair?.* contain the links for particular verse
+pairs, where the verse pair number = (samp# - 1) * 10 + SentPair# + 1.
+

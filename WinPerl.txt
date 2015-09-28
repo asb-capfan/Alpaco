@@ -1,0 +1,48 @@
+		PERL INSTALL INSTRUCTIONS FOR WINDOWS
+
+Step 1: Go to the following website:
+"http://www.activestate.com/Products/Download/Get.plex?id=ActivePerl"
+
+Step 2: Download the programs required for your version of Windows
+
+Step 3: Install this program
+
+Step 4: Download the MSI version of ActivePerl if possible, if the 
+installation fails, download the AS Package. (The AS Package has no UNINSTALL
+option)
+
+Step 5: Install this program
+
+Step 6: Run an MSDOS window (possible from the start menu)
+
+Step 7: Type cd ..\perl\bin
+
+Step 8: Type perl -v (This will display the version of perl you installed)
+
+Step 9: Type perl -e "use Tk" If you don't get an error, then perl/Tk has 
+beeninstalled correctly. If an error occurs you may have to install a version
+of Tk. If so, try this website:
+"http://www.perl.com/CPAN/modules/by-module/Tk/"
+At this site, search for Tkversion#.tar.gz. There will be multiple version#'s,
+so search for the latest. Then follow the readme file for installation
+
+Step 10: If Tk is installed correctly, try a simple Hello World program. Use a
+simple text editor to make a file which says:
+
+		use Tk;
+		my $mw = MainWindow->new;
+		$mw->title("Hello World");
+		$mw->Button(-text,"Press",-command,sub{exit})->pack(side,left,padx,10);
+		$mw->Button(-text,"A Button",-command,sub{exit})->pack(side,left,padx,10);
+		$mw->Button(-text,"To Exit",-command,sub{exit})->pack(side,left,padx,10);
+
+		MainLoop;
+
+Save this file as hello.pl in the perl\bin directory. At the DOS prompt, in 
+the perl\bin directory. Type perl hello.pl. This should display a simple 
+window with 3 exit buttons.
+	
+
+Step 11: If any more problems arrise, try seeking help at: 
+"http://www.perl.com" or "http:www.activestate.com"
+

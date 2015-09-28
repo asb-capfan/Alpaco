@@ -1,0 +1,61 @@
+Changes from alpaco version 0.1
+-------------------------------
+
+* Changed the wording of verse to text were relevant.
+  (e.g. 'Source verse' changed to 'Source text')
+  Also changed wording of verse into sub-section where relevant.
+  (e.g. A file is broken down into 'verses', changed to 'sub-sections')
+
+* Changed the options that were called "load ..." to "open ...".
+  The terms load and open are synonyms, so we are trying to stay
+  consistent by using only one term, which is open.
+  (e.g. 'load text files' changed to 'open text files')
+
+* Reorganized the user interface.  Attempted to make the interface
+  more compact and user-friendly.
+
+* Renamed the option 'Clear Total Entry' to 'Clear All'.
+
+* Changed the option 'Word Distance' to 'Resize'.
+
+* Changed the terms 'first' and 'second' to 'source' and 'target' respectively.
+  The change was made when referring to the parallel texts, and it was done to 
+  gain consistency throughout the package.  
+
+* Changed the size of the main window when alpaco opens.  It used to be a short
+  wide window.  This has been overridden to make it more proportionate.
+
+* In the line-by-line functionality, added a previous line functionality.  
+  There is already a next line button, but previous may be helpful.
+
+* Removed the "open text files" option from the file menu.  This option was 
+  not very practical.  It just simulated pressing enter on both entry fields.
+  I removed it to make things more compact and uniform.
+
+* Added a 'find file' option to alpaco-helper.
+
+* Added a default splitting rule to alpaco-helper.
+
+* Warned users before saving over pre-existing files in alpaco-helper.
+
+* In both save modes, if a user attempts to save over a file that already 
+  exists, have a pop-up that warns them.  If they chose to overwrite, simply
+  continue with the save.  If they cancel, allow them to re-enter a new name
+  for the existing file.
+
+* Only pack the blinker buttons if a blinker file has been opened.  As soon as
+  a blinker file is opened, however, the blinker buttons must stay until a user
+  exits.  Removing the buttons if a user opens a different kind of file could
+  cause problems if a user does a particular set of steps.  This is much more
+  safe, and also convenient for the user.  The buttons are not available if a 
+  blinker file hasn't been opened yet.  
+
+* Consistancy issues I found with Alpaco - bell noise on all errors, make sure 
+  all errors have messages, make keyboard shortcuts consistant.
+
+
+
+
+
+
+
