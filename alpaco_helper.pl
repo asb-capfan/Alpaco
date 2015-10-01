@@ -30,12 +30,13 @@
 #-----------------------------------------------------------------------------
 #                              Start of program
 #-----------------------------------------------------------------------------
-                                    
 
-
-
+# use custom lib folder
+use lib './lib';                                    
 
 use Tk;
+use Tk::Markdown;
+use Tk::DynaMouseWheelBind;
 
 #Loads the SimpleFileSelect module if possible, otherwise defaults to a label
 $SimpleFileSelect = "Label";
@@ -46,6 +47,9 @@ eval{
 ########## MAKES THE INTERFACE & WIDGETS #################
 $mw = MainWindow->new;
 $mw->title("Alpaco Text Preparation");
+
+# set up auto scroll binding to mouse wheel
+$mw->DynaMouseWheelBind('Tk::Markdown', 'Tk::Text', 'Tk::Canvas');
 
 #frame for entry and labels
 $frame_w = $mw->Frame->pack(-side,'top',-fill,'x');
@@ -69,7 +73,9 @@ $frametop->Menubutton(-text,"File",
 				     "-",				     
 				     ['command',"Exit",-command,
 				      sub{ #removes the temporary files that were made if present
-					  system("rm undo_temp") if(open(FP1,"undo_temp"));
+                        if( -e 'undo_temp' and -f 'undo_temp' ) {
+                            unlink('undo_temp');
+                        }
 					  exit;}]],						
 		      -tearoff,0)->pack(-side,'left',-anchor,'w');
 
@@ -89,7 +95,9 @@ $frametop->Menubutton(-text,"Help",
 #exit button
 $frame_w->Button(-text,"Exit", -command,
 		 sub{    #removes the temporary files that were made if present
-		     system("rm undo_temp") if(open(FP1,"undo_temp"));
+                if( -e 'undo_temp' and -f 'undo_temp' ) {
+                    unlink('undo_temp');
+                }
 		     exit;},
 		 -activebackground,"blue",
 		 -background,"black",
@@ -434,23 +442,32 @@ sub help_pop{
     $t3->withdraw;
     $t3->title("Help");
     $f = $t3->Frame->pack(-side,'bottom');
-    $help = $t3->Scrolled("Text",-background,'white',
-			  -selectbackground,'blue',
-			  -selectforeground,'white')->pack(-expand, 1, -fill,'both');
+    $help = $t3->Scrolled("Markdown",
+        -scrollbars => 'soe',
+        -background =>'white',
+        -selectbackground =>'blue',
+        -selectforeground => 'white',
+    )->pack(-expand, 1, -fill,'both');
     
     
     #error checking for opening the README file
-    if(!open(FH, "README.txt")){
-	$info = "Error loading 'README.txt'";
-	$t3->withdraw;
-	$entry_w->bell();
-	return(-1);
+    
+    my $help_filename = 'README.md';
+    open(my $fh, '<:encoding(UTF-8)', $help_filename);
+    if(!$fh) {
+        $info = "Error loading '$help_filename'";
+        $t3->withdraw;
+        $entry_w->bell();
+        return(-1);
     }
 
     #inserts the README into the text file
-    while(<FH>){
-	$help->insert("end",$_);
+    my $help_content = '';
+    while(my $row = <$fh>){
+        $help_content .= $row;
     }
+    close($fh);
+    $help->insert("end",$help_content);
 
     #disables the text widget for read-only access
     $help->configure(-state,'disabled');    
@@ -468,10 +485,10 @@ sub help_pop{
     $help->configure(-state,'normal');
 
     #select the pertinent info
-    $help->tagAdd("sel","626.0","651.0 lineend");
+    $help->tagAdd("MySel","626.0","651.0 lineend");
 
     #moves to the right spot in the text widget		       	  
-    $help->see("sel.first");
+    $help->see("MySel.first");
     $help->configure(-state,'disabled');
 
 

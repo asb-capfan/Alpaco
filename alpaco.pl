@@ -27,10 +27,13 @@
 #                              Start of program
 #-----------------------------------------------------------------------------
 
-
+# use custom lib folder
+use lib './lib';
 
 #allows the use of Tk
 use Tk;
+use Tk::Markdown;
+use Tk::DynaMouseWheelBind;
 
 #this loads the HistEntry module if possible, otherwise just uses regular entry widgets
 $Entry = "HistEntry";
@@ -84,6 +87,9 @@ my $mw = MainWindow->new(-height,550,-width,660);
 $mw->packPropagate(0);
 $mw->title("Aligner for Parallel Corpora (Alpaco)");
 #$mw->geometry("550x550");
+
+# set up auto scroll binding to mouse wheel
+$mw->DynaMouseWheelBind('Tk::Markdown', 'Tk::Text', 'Tk::Canvas');
 
 #frame for entry and labels
 $frametop = $mw->Frame->pack(-side,'top',-fill,'x');
@@ -296,7 +302,7 @@ $frameright->Button(-text,"Exit", -command,sub{
     system("rm sizetemp SizeVerse1 SizeVerse2") if(open(FP2,"sizetemp"));
     exit;},
 		    -activebackground,"blue"
-		    )->pack(-side,'top',-anchor,'w',-fill,'x',pady,10);
+		    )->pack(-side,'top',-anchor,'w',-fill,'x',-pady,10);
 
 #View Sentences button
 #$frameright->Button(-text,"View Sentences", -command,\&show_sentences,
@@ -1447,23 +1453,30 @@ sub help_pop{
     $t1->withdraw;
     $t1->title("Help");
     $f = $t1->Frame->pack(-side,'bottom');
-    $help = $t1->Scrolled("Text",-background,'white',
-			  -selectbackground,'blue',
-			  -selectforeground,'white')->pack(-expand, 1, -fill,'both');
-    
+    $help = $t1->Scrolled("Markdown",
+        -scrollbars => 'soe',
+        -background =>'white',
+        -selectbackground =>'blue',
+        -selectforeground => 'white',
+    )->pack(-expand => 1, -fill =>'both');
     
     #error checking for opening the README file
-    if(!open(FH, "README.txt")){
-	$info = "Error opening 'README.txt'";
-	$t1->withdraw;
-	$entry1_w->bell();
-	return(-1);
+    my $help_filename = 'README.md';
+    open(my $fh, '<:encoding(UTF-8)', $help_filename);
+    if(!$fh){
+        $info = "Error opening '$help_filename'";
+        $t1->withdraw;
+        $entry1_w->bell();
+        return(-1);
     }
 
     #inserts the README into the text file
-    while(<FH>){
-	$help->insert("end",$_);
+    my $help_content = '';
+    while(my $row = <$fh>){
+        $help_content .= $row;
     }
+    close($fh);
+    $help->insert("end",$help_content);
 
     #disables the text widget for read-only access
     $help->configure(-state,'disabled');    
@@ -1524,7 +1537,7 @@ sub about_pop{
 
     #inserts the necessary information
     $about->insert("end","Alpaco (Aligner for Parallel Corpora)\n\n");
-    $about->insert("end","Version 1.0\n\n");
+    $about->insert("end","Version 1.1\n\n");
     $about->insert("end","Research project by Dr. Ted Pedersen and Brian Rassier\n\n");
     $about->insert("end","This program is free software; you can redistribute it and/or\nmodify it under the terms of the GNU General Public License\nas published by the Free Software Foundation; either version 2\nof the License, or (at your option) any later version.\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\nGNU General Public License for more details\n");
     
@@ -1559,7 +1572,7 @@ sub open_pop{
     $e = $t4->Entry(-textvariable,\$open,-background,"white",-takefocus,1)->pack(-side,'top',-anchor,'w');
     
     $frame = $t4->Frame->pack(-side,'bottom');
-    $frame->Button(-text,"Open",-background,"black",-foreground,"white",-command,\&open2)->pack(-side,'left',padx,5);
+    $frame->Button(-text,"Open",-background,"black",-foreground,"white",-command,\&open2)->pack(-side => 'left', -padx => 5);
     $frame->Button(-text,"Cancel",-background,"black",-foreground,"white",-command,sub{$t4->withdraw})->pack(-side,'left');
 
     
@@ -2038,9 +2051,9 @@ sub save_blink{
 				  #make text widget able to write to
 				  $help->configure(-state,'normal');
 				  #select the pertinent info
-				  $help->tagAdd("sel","460.0","474.0 lineend");
+				  $help->tagAdd("MySel","460.0","474.0 lineend");
 				  #moves to the right spot in the text widget		       	  
-				  $help->see("sel.first");
+				  $help->see("MySel.first");
 				  $help->configure(-state,'disabled');
 			      })->pack(-side,'left',-padx,15);
     
@@ -2063,9 +2076,9 @@ sub save_blink{
 sub saveb{
     #check if they entered a name for the Alpaco file
     if($conn eq ""){
-	$info = "Error: Please enter an Alpaco name to save to";
-	$entry1_w->bell();
-	return(-1);
+        $info = "Error: Please enter an Alpaco name to save to";
+        $entry1_w->bell();
+        return(-1);
     }
     
     #THIS SECTION CHECKS IF THE FILES EXISTS HERE BEFORE OPENING
@@ -2641,16 +2654,18 @@ sub data_pop{
     $b_frame->Button(-text,"Save",-background,"black",-foreground,"white",-command,\&chdata)->pack(-side,'right');
     
     #makes the help button that opens the README and moves to the proper spot
-    $b_frame->Button(-bitmap,'questhead',
-		     -command,sub{&help_pop;
-				  #make text widget able to write to
-				  $help->configure(-state,'normal');
-				  #select the pertinent info
-				  $help->tagAdd("sel","612.0","622.0 lineend");
-				  #moves to the right spot in the text widget
-				  $help->see("sel.first");			  
-				  $help->configure(-state,'disabled');
-			      })->pack(-side,'left',-padx,15);
+    $b_frame->Button(
+        -bitmap => 'questhead',
+        -command => sub{
+            &help_pop;
+            #make text widget able to write to
+            $help->configure(-state,'normal');
+            #select the pertinent info
+            $help->tagAdd("MySel","612.0","622.0 lineend");
+            #moves to the right spot in the text widget
+            $help->see("MySel.first");			  
+            $help->configure(-state,'disabled');
+    })->pack(-side,'left',-padx,15);
     
 
     #define hard enter callback for entry widget 3

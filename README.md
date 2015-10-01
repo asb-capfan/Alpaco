@@ -1,20 +1,18 @@
-```
-                  				   ALPACO
+# ALPACO
 
-                         Aligner for Parallel Corpora
-                         ============================
-                        Version 0.3 Copyright (C) 2003
-                       Brian Rassier, rass0028@d.umn.edu
-                       Ted Pedersen, tpederse@umn.edu
-                        University of Minnesota, Duluth
-		
-		                   Released January 27, 2003
+## Aligner for Parallel Corpora
 
-          		 http://www.d.umn.edu/~tpederse/parallel.html
+Version 0.3 Copyright (C) 2003
+Brian Rassier, rass0028@d.umn.edu
+Ted Pedersen, tpederse@umn.edu
+University of Minnesota, Duluth
+
+Released January 27, 2003
+
+http://www.d.umn.edu/~tpederse/parallel.html
 
 
-1. Introduction:
-----------------
+## 1. Introduction:
 
 Alpaco (Aligner for Parallel Corpora) is a program that is designed to 
 align parallel texts.  If two files are known to be translations 
@@ -34,8 +32,7 @@ typically use this alignment tool.
 
 
 
-2. Packages Needed:
--------------------
+## 2. Packages Needed:
 
 Alpaco was written using perl  v5.6 and Tk v800.023.  Any versions at this 
 level or higher will work with Alpaco.  Any lesser versions may work, but 
@@ -49,24 +46,24 @@ They are both distributed with Readme files, which will explain the
 installation.  To see if they were installed correctly, make a simple perl/Tk
 script which contains the following:
 
-#!/usr/local/bin/perl
-use Tk;
-use Tk::HistEntry;
-use Tk::SimpleFileSelect;
-
-my $mw = MainWindow->new;
-$e1 = $mw->HistEntry(-textvariable,\$file1, -background,"white", -takefocus,1)->pack(-side,'top', -anchor,'w');
-$mw->Button(-text,'Find A File',-command,\&find)->pack(-side,'bottom');
-$mw->Button(-text,'Close',-command,sub{exit;})->pack(-side,'bottom');
-
-MainLoop;
-
-sub find{
-$top = $mw->SimpleFileSelect;
-$found = $top->Show;
-$file1 = $found;
-$e1->historyAdd($found);
-}
+    #!/usr/local/bin/perl
+    use Tk;
+    use Tk::HistEntry;
+    use Tk::SimpleFileSelect;
+    
+    my $mw = MainWindow->new;
+    $e1 = $mw->HistEntry(-textvariable,\$file1, -background,"white", -takefocus,1)->pack(-side,'top', -anchor,'w');
+    $mw->Button(-text,'Find A File',-command,\&find)->pack(-side,'bottom');
+    $mw->Button(-text,'Close',-command,sub{exit;})->pack(-side,'bottom');
+    
+    MainLoop;
+    
+    sub find{
+        $top = $mw->SimpleFileSelect;
+        $found = $top->Show;
+        $file1 = $found;
+        $e1->historyAdd($found);
+    }
 
 This script will make a simple interface that uses both modules.  If 
 everything is working properly, this program will work also.  If there are 
@@ -75,8 +72,7 @@ case, try visiting www.perl.org or www.cpan.org.
 
 
 
-3. Blinker Data:
-----------------
+## 3. Blinker Data:
 
 There was a similar project done at NYU, which was named the Blinker.  The 
 Alpaco project is based on the Blinker project.  Information about the 
@@ -88,22 +84,20 @@ numbers.  Each column of numbers refers to the word number in the respective
 text.  The numbers in each row are alignments of each other.  A simple 
 example will make this more clear.  A sample blinker file may consist of two
 columns as follows:
-1 4
-3 3
-2 1
-0 2
+
+    1 4
+    3 3
+    2 1
+    0 2
+
 The first column would correspond to words in the source text, and the second 
 column would correspond to words in the target text.  The connections would be
 as follows: 
 
-- The first word in the source text would be connected to the fourth word in 
-  the target text.
-- The third word in the source text would be connected to the third word in the
-  target text.
-- The second word in the source text would be connected to the first word in 
-  the target text.
-- The second word in the target text would have no connection to the source 
-  text (Null Connection).
+* The first word in the source text would be connected to the fourth word in the target text.
+* The third word in the source text would be connected to the third word in the target text.
+* The second word in the source text would be connected to the first word in the target text.
+* The second word in the target text would have no connection to the source text (Null Connection).
 
 The last alignment is a bit different. If there is a zero in this format, it 
 indicates a null connection.  This means there is no word that is an alignment 
@@ -122,7 +116,7 @@ sub-sections of the larger text file, and are separated by a newline character.
 The aligned files are named in the format samp*.SentPair? where the 
 corresponding verse number is calculated by: 
 
-verse # = (samp# - 1) * 10 + SentPair# + 1  
+    verse # = (samp# - 1) * 10 + SentPair# + 1  
 
 This is the equation that is referred to throughout the README.  The parallel 
 text files are named EN.sample.* for English and FR.sample.* for French.  Here 
@@ -131,77 +125,77 @@ the 10 alignment files are included with the Alpaco package.  The 10
 alignment files are in the A1 directory.  They can be opened as Alpaco files 
 to see a typical alignment.
 
-EN.sample.1 (only verse one (sub-section one) is shown here)
------------
-After all , if you were cut out of an olive tree that is wild by nature , and contrary to nature were grafted into a cultivated olive tree , how much more readily will these , the natural branches , be grafted into their own olive tree !
+### EN.sample.1 (only verse one (sub-section one) is shown here)
 
-FR.sample.1 (only verse one(sub-section one) is shown here)
------------
-Si toi , tu as été coupé de le olivier naturellement sauvage , et enté contrairement à ta nature sur le olivier franc , à plus forte raison eux seront - ils entés selon leur nature sur leur propre olivier .
+    After all , if you were cut out of an olive tree that is wild by nature , and contrary to nature were grafted into a cultivated olive tree , how much more readily will these , the natural branches , be grafted into their own olive tree !
+
+### FR.sample.1 (only verse one(sub-section one) is shown here)
+
+    Si toi , tu as été coupé de le olivier naturellement sauvage , et enté contrairement à ta nature sur le olivier franc , à plus forte raison eux seront - ils entés selon leur nature sur leur propre olivier .
 
 
-A1/samp1.SentPair0 ---> (connections for the first Annotator, for the 
-first verse of the given text samples)
--------------------------
-4 1
-5 2
-5 4
-7 7
-9 8
-8 8
-10 9
-12 10
-11 10
-16 11
-17 11
-13 12
-14 12
-15 12
-18 13
-19 14
-24 15
-20 16
-21 17
-22 18
-22 19
-23 5
-23 6
-6 5
-6 6
-25 20
-26 21
-28 22
-29 22
-27 23
-30 24
-1 0
-2 0
-3 3
-49 41
-47 40
-48 40
-46 39
-45 38
-44 37
-43 33
-32 26
-33 26
-34 27
-34 28
-36 29
-35 30
-42 30
-39 34
-39 35
-39 36
-40 32
-37 0
-38 0
-41 0
-31 0
-0 31
-0 25
-**These are all the connections from Annotator 1 for the verses (sub-sections) 
+### A1/samp1.SentPair0 ---> (connections for the first Annotator, for the first verse of the given text samples)
+
+    4 1
+    5 2
+    5 4
+    7 7
+    9 8
+    8 8
+    10 9
+    12 10
+    11 10
+    16 11
+    17 11
+    13 12
+    14 12
+    15 12
+    18 13
+    19 14
+    24 15
+    20 16
+    21 17
+    22 18
+    22 19
+    23 5
+    23 6
+    6 5
+    6 6
+    25 20
+    26 21
+    28 22
+    29 22
+    27 23
+    30 24
+    1 0
+    2 0
+    3 3
+    49 41
+    47 40
+    48 40
+    46 39
+    45 38
+    44 37
+    43 33
+    32 26
+    33 26
+    34 27
+    34 28
+    36 29
+    35 30
+    42 30
+    39 34
+    39 35
+    39 36
+    40 32
+    37 0
+    38 0
+    41 0
+    31 0
+    0 31
+    0 25
+
+These are all the connections from Annotator 1 for the verses (sub-sections) 
 found by the equation given above.  The order to these numbers does not 
 matter, it is just in the order that the alignments were made.  This file
 shows an alignment of the 4th word in the English text to the 1st word in the
@@ -219,8 +213,7 @@ alignments for viewing/editing.
 
 
 
-4. Alpaco data:
----------------
+## 4. Alpaco data:
 
 As stated earlier, Alpaco data is stored much like the Blinker data.  The 
 Blinker files are a subset of the Alpaco files.  This just means that Alpaco
@@ -234,19 +227,20 @@ there are two columns of numbers which are used the exact same way as explained
 earlier.  Another note to make is that if there is ever a zero in a column, 
 it means that the opposite column has no connection, or a null connection (as 
 explained earlier).  An example of a typical Alpaco file is as follows:
-file1 file2
-1 1
-2 4
-3 2
-0 3
+
+    file1 file2
+    1 1
+    2 4
+    3 2
+    0 3
 
 In this file, there would be two files named file1 and file2.  They would 
 have the following manual alignments:
 
-- The first word in file1 would be connected to the first word in file2.
-- The second word in file1 would be connected to the fourth word in file2.
-- The third word in file1 would be connected to the second word in file2
-- The third word in file2 would have no connection to file1 (Null Connection).
+* The first word in file1 would be connected to the first word in file2.
+* The second word in file1 would be connected to the fourth word in file2.
+* The third word in file1 would be connected to the second word in file2
+* The third word in file2 would have no connection to file1 (Null Connection).
 
 These may not be the only words in the files, but they are the only words 
 that have been manually aligned.
@@ -257,7 +251,7 @@ characters.   This way the alignments can be made on a smaller scale (explained
 more in section 6).  In this case, Alpaco will use an equation similar to the 
 Blinker, so names are not stored with the connections.  The Alpaco equation is:
 
-sub-section # = (samp# - 1) * sub-sections + SentPair# + 1  
+    sub-section # = (samp# - 1) * sub-sections + SentPair# + 1  
 
 The only difference between this equation and the Blinker equation is that 
 there is a variable (sub-sections) in the place of the number 10 in the Blinker
@@ -279,8 +273,7 @@ to type the whole file path in order to open the next file.
 
 
 
-5. File Naming Standards:
--------------------------
+## 5. File Naming Standards:
 
 There are two different ways Alpaco can be used, as far as file naming is 
 concerned.  When deciding which naming standard to choose, users should 
@@ -295,8 +288,8 @@ alignments of each other, and Alpaco will help to make alignments at the
 word/phrase level.
 
 
-5.1. File Naming with the Alpaco Format
----------------------------------------
+### 5.1. File Naming with the Alpaco Format
+
 This format is very useful if there will only be small amounts of data/files
 to be aligned.  Files can be aligned as a whole or line-by line in this 
 format.  In order to save in the line-by-line format with this naming scheme,
@@ -310,8 +303,8 @@ won't have to keep track of a naming scheme.  The user can name the files what
 they choose, and load/edit them by that name.
 
 
-5.2. File Naming With the Blinker Format
-----------------------------------------
+### 5.2. File Naming With the Blinker Format
+
 This format is helpful when large amounts of data/files are needed.  The 
 format is very strict, but if followed can be very beneficial.  
 
@@ -325,8 +318,10 @@ is seen in the Blinker data included with Alpaco (EN.sample.1 and FR.sample.1).
   
 The first naming stipulation is that of all the following items are in the same
 directory:
-    - annotators' directories
-    - parallel text files
+
+* annotators' directories
+* parallel text files
+
 The annotators' directories must be named in the format A# with the # being 
 the number of annotator it is.  If only one annotator is used the user will 
 simply have one directory named A1. 
@@ -341,7 +336,8 @@ The default data values for Alpaco is having 7 annotators (7 directories named
 A1 - A7), 25 text samples (25 different prefixes named similar to 
 A1/samp1.SentPair? - A1/samp25.SentPair? for all 7 annotators), and 10 
 sub-sections per text sample (each text file is separated by 10 newlines, thus 
-broken into 10 smaller alignments. Naming follows: A1/samp1.SentPair0 - A1/samp1.SentPair9).  These defaults are from the Blinker data, so Alpaco is set up to
+broken into 10 smaller alignments. Naming follows: A1/samp1.SentPair0 - A1/samp1.SentPair9).
+These defaults are from the Blinker data, so Alpaco is set up to
 read/edit Blinker data by default.  These data limits can be changed by 
 choosing "Change Data Limits" from Alpaco's options menu.  This must be done 
 every time Alpaco starts if the data limits differ from Blinker's standards.  
@@ -384,16 +380,15 @@ in section 6.
 
 
 
-6. Alpaco Usage:
-----------------
+## 6. Alpaco Usage:
 
 After the file naming standards are learned, the rest of Alpaco is very simple
 to use.  This section will go through the main abilities Alpaco has, and the 
 things a typical user would do with Alpaco.
 
 
-6.1. Loading Raw Text Files 
----------------------------
+### 6.1. Loading Raw Text Files 
+
 Loading raw text files is a great way to start learning the Alpaco tool.  This
 is also the main way that alignments can be made with Alpaco. The other way 
 alignments can be made is by loading previously aligned files, and editing
@@ -404,16 +399,16 @@ must be separated in this fashion before loading into Alpaco.  Included in
 this package is a helper tool that can separate these tokens for a user.  See
 section 7 for more information about this helper tool.
 
-6.1.1. Loading Raw Text Files as a Whole
-----------------------------------------
+#### 6.1.1. Loading Raw Text Files as a Whole
+
 Loading a raw text file as a whole is very simple.  Just type in the file name
 in the entry box (for source or target), and press enter.  The term source 
 and target files are used occasionally with Alpaco.  The source file is on 
 the left side of the interface, and the target file is on the right.  Once 
 source and target texts are loaded, the alignment process can begin.
 
-6.1.2. Loading Raw Text Files Line-by-Line
-------------------------------------------
+#### 6.1.2. Loading Raw Text Files Line-by-Line
+
 Loading text files line-by-line is a little more complicated. First the 
 option must be enabled by pressing the button to the right of the file entry
 boxes.  Then files can be loaded exactly like a whole file, but it will only
@@ -428,8 +423,8 @@ of the alignment file.  This way Alpaco doesn't need to use the equation to
 find the text associated with the alignment.
 
 
-6.2. Opening an Alpaco File
----------------------------
+### 6.2. Opening an Alpaco File
+
 There are two types of Alpaco files.  One which is exactly like the Blinker 
 files and will use the Blinker equation to find the associated text files, and 
 another that is similar to Blinker files, only it lists the text file names
@@ -445,15 +440,15 @@ up with the current directory information in it.  The user can find the Alpaco
 file that is desired, and the tool will load it once the file is accepted.
 
 
-6.3. Saving an Alpaco File
---------------------------
+### 6.3. Saving an Alpaco File
+
 There are two ways to save an Alpaco file.  One is just by giving a name for
 it, in which case Alpaco has the necessary information to retrieve the files
 for this alignment.  The other way is by specifying filenames, then the name
 for the Alpaco file.  Both situations are explained next.
 
-6.3.1. "Save an Alpaco File" 
-----------------------------
+#### 6.3.1. "Save an Alpaco File" 
+
 This option is used when Alpaco knows how to get the necessary files for the
 alignment.  An example of this use is when a whole file is aligned, and the
 user wants to save with the more simple naming standard (see section 5).  
@@ -464,8 +459,8 @@ user must save according to the naming standards in section 5.2.  Then Alpaco
 will be able to find the needed files using the Blinker equation, and it only 
 needs the name of the actual Alpaco file. 
 
-6.3.2. "Save Current Work to File"
------------------------------------
+#### 6.3.2. "Save Current Work to File"
+
 This option is used in two different situations.  The first is if there is a 
 file that has been saved with the Blinker format, and the user wants to 
 change it over to the Alpaco format (see section 5).  Then simply load the file
@@ -481,8 +476,8 @@ the tool will access the files in this format instead of with the Blinker
 equation.
 
 
-6.4. Edit/Browse mode
----------------------
+### 6.4. Edit/Browse mode
+
 These two modes will change whether or not the user has the ability to change
 the alignment data.  Browse mode will show the alignments, but won't allow 
 changes to the data.  Edit mode will show the alignments, and will allow the
@@ -492,13 +487,13 @@ clicking on the desired button on the interface, or by selecting "Change Mode"
 from the options menu.  Browse mode is the default when Alpaco is started.
 
 
-6.5 Making Connections
-----------------------
+### 6.5 Making Connections
+
 There are two different kind of connections, which are regular connections,
 and null connections.  Both are explained here.
 
-6.5.1 Regular Connections
--------------------------
+#### 6.5.1 Regular Connections
+
 This is used when there is an alignment that should be made between word(s) 
 in the source text to word(s) in the target text. To make the alignment 
 Alpaco must be in edit mode.  If the tool is in edit mode, simply click the 
@@ -513,8 +508,8 @@ words, indicating the connection.  The words will also change color, to help
 indicate which words have not been aligned yet.  When a file is saved, the 
 connections will be saved with it.
 
-6.5.2. Null Connections
------------------------
+#### 6.5.2. Null Connections
+
 This option is used when there are word(s) in one file that have no matches
 in the other file.  To make a null connection, Alpaco must also be in edit
 mode.  Then simply select the word(s) with no match, and they will change 
@@ -527,14 +522,14 @@ like the null connect button itself.  When a file is saved, the null
 connections will also be saved with it.
 
 
-6.6. Undo and Redraw Connections
---------------------------------
+### 6.6. Undo and Redraw Connections
+
 Once connections are drawn, they are not necessarily permanent.  They can
 be undone in a few different ways.  The undone connections can also be 
 redrawn.
 
-6.6.1. Undoing a Connection
----------------------------
+#### 6.6.1. Undoing a Connection
+
 There are three different ways to undo connections, which make undoing them
 much more convenient.  All three can be done the same way, by pressing the 
 Undo button, by selecting Undo Connection from the options menu, or using the 
@@ -551,8 +546,8 @@ over with its alignment.  The final way to undo a connection is by selecting
 zero words.  This will undo the last connection that was done, one alignment at
 a time.  This is useful if there were some recent mistakes that were made. 
 
-6.6.2. Redrawing a Connection
------------------------------
+#### 6.6.2. Redrawing a Connection
+
 If a connection is undone, Alpaco will remember them until a new file is 
 loaded, the files/connections are cleared, or Alpaco is exited.  To redraw an 
 undone move, simply press the Redraw button on the interface, or select 
@@ -560,15 +555,15 @@ undone move, simply press the Redraw button on the interface, or select
 connection, one line at a time, until all the undone connections are redrawn.
 
 
-6.7. View Sentences
--------------------
+### 6.7. View Sentences
+
 This option is very helpful when making alignments.  It helps sometimes to 
 read the sentences that are to be aligned, which is what this option was made
 for.  To view the sentences, select "View Sentences" from the options menu.
 
 
-6.8. Clear Connections/All
---------------------------
+### 6.8. Clear Connections/All
+
 The first of these options, Clear Connections, is helpful if the file that is
 being aligned is aligned very poorly.  This way the connections that have been 
 made are removed, yet the files can still be worked on.  This will start the 
@@ -581,8 +576,8 @@ worked with.  To clear the entry completely, choose the "Clear All"
 choice from the file menu.
 
 
-6.9. Finding Text Files
------------------------
+### 6.9. Finding Text Files
+
 This choice is very helpful if the user is not very familiar with their files
 and file structures.  For this option, the user must have the SimpleFileSelect
 module installed (see section 2).  To find a text file, choose "Find Text 
@@ -594,8 +589,8 @@ it is to be used for the source (left) or target (right).  These options will
 open the file just as if the regular open functions were used in its place.
 
 
-6.10. Resizing
---------------
+### 6.10. Resizing
+
 This option can be useful if many connections are in a small area, and it is 
 difficult to see.  It is best used in browse mode only. This is because 
 resizing can change the files being used to temporary sizing files, thus 
@@ -604,8 +599,8 @@ the "Resize" section on the right portion of the interface.  This will
 add or reduce the space between the words, in the vertical direction.
 
 
-6.11. Next/Previous File and Annotator
---------------------------------------
+### 6.11. Next/Previous File and Annotator
+
 These options are available if the more strict naming standards are used. 
 These options are a great benefit that comes from the pain of the strict 
 naming standards. For example, if a user was looking at the Blinker data set,
@@ -616,8 +611,8 @@ once a file saved with the Blinker format has been opened.  Buttons for these
 options will appear in this situation. 
 
 
-6.12. Change Data Limits
-------------------------
+### 6.12. Change Data Limits
+
 If a different data set is used than the Blinker standards, then this option
 is a must.  The defaults for Alpaco are seven data annotators, 25 parallel 
 texts, and 10 sub-sections per text file(An explanation of a file and its 
@@ -630,8 +625,7 @@ are to be used differently then the defaults.
 
 
 
-7. Alpaco_helper.pl:
---------------------
+## 7. Alpaco_helper.pl:
 
 Included in the Alpaco package is alpaco_helper.pl.  Alpaco considers tokens
 as anything separated by a space in the input file, and many times the text 
@@ -659,8 +653,7 @@ has a default splitting rule, just so users can see an example.
 
 
 
-8. Known Problems / Future Enhancements:
-----------------------------------------
+## 8. Known Problems / Future Enhancements:
 
 * When saving Alpaco files in the line-by-line format, the user still has to
 keep track of the naming standard.  Because this naming standard is very 
@@ -677,7 +670,7 @@ These buttons have many options, and need memory to use.  This will slow down
 the use of the tool in some cases, depending on the file size and how much 
 memory is available.  If the larger files are broken up into smaller sections,
 the tool should have no memory issues.  Our tests have shown that Alpaco takes
-roughly 3MB per 2,000 words loaded into it.  
+roughly 3MB per 2,000 words loaded into it.
 
 * Because of the last problem of memory usage, there may be a new design 
 possibility in the future.  The alternative design idea that we have includes
@@ -685,30 +678,18 @@ using text in the place of the buttons for each word.  This may be less user
 friendly, but with larger files it would be much more convenient with respect
 to the memory issue.    
 
-9. Acknowlegements
-------------------
+## 9. Acknowlegements
 
-This work has been partially supported by a National Science Foundation 
-Faculty Early CAREER Development award (#0092784) and by a grant from the  
-Undergraduate Research Opportunities Program (UROP) of the University of 
-Minnesota.  
+This work has been partially supported by a National Science Foundation Faculty Early CAREER Development award (#0092784) and by a grant from the Undergraduate Research Opportunities Program (UROP) of the University of Minnesota.  
 
-Copying:
---------
-This program package is free software; you can redistribute it and/or modify 
-it under the terms of the GNU General Public License as published by the Free
-Software Foundation; either version 2 of the License, or (at your option) any
-later version.
+## Copying
 
-This program is distributed in the hope that it will be useful, but WITHOUT 
-ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more 
-details.
+This program package is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 
-You should have received a copy of the GNU General Public License along with 
-this program; if not, write to the Free Software Foundation, Inc., 59 Temple 
-Place - Suite 330, Boston, MA  02111-1307, USA.
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+See the GNU General Public License for more details.
 
-Note: The text of the GNU General Public License is provided in the file 
-GPL.txt that you should have received with this distribution. 
-```
+You should have received a copy of the GNU General Public License along with this program;
+if not, write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+Note: The text of the GNU General Public License is provided in the file LICENSE that you should have received with this distribution. 
