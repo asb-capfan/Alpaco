@@ -2,13 +2,12 @@
 
 ## Aligner for Parallel Corpora
 
-Version 0.3 Copyright (C) 2003
-Brian Rassier, rass0028@d.umn.edu
-Ted Pedersen, tpederse@umn.edu
-University of Minnesota, Duluth
+Copyright (C) 2003
 
-Released January 27, 2003
-
+* Brian Rassier, rass0028@d.umn.edu
+* Ted Pedersen, tpederse@umn.edu
+* University of Minnesota, Duluth
+    
 http://www.d.umn.edu/~tpederse/parallel.html
 
 
@@ -52,9 +51,19 @@ script which contains the following:
     use Tk::SimpleFileSelect;
     
     my $mw = MainWindow->new;
-    $e1 = $mw->HistEntry(-textvariable,\$file1, -background,"white", -takefocus,1)->pack(-side,'top', -anchor,'w');
-    $mw->Button(-text,'Find A File',-command,\&find)->pack(-side,'bottom');
-    $mw->Button(-text,'Close',-command,sub{exit;})->pack(-side,'bottom');
+    $e1 = $mw->HistEntry(
+        -textvariable => \$file1,
+        -background => "white",
+        -takefocus => 1,
+    )->pack(-side,'top', -anchor,'w');
+    $mw->Button(
+        -text => 'Find A File',
+        -command => \&find,
+    )->pack(-side => 'bottom');
+    $mw->Button(
+        -text => 'Close',
+        -command => sub{exit;},
+    )->pack(-side => 'bottom');
     
     MainLoop;
     
